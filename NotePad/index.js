@@ -1,22 +1,16 @@
 const express = require('express');
 const app = express();
-// import { fileURLToPath } from "url";
 
 const path = require('path');
- 
-
-
-app.set("view engine","ejs");
+const fs = require('fs');
+app.set("view engine", "ejs");
 app.use(express.json());
-
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
-
-app.use(express.static(path.join(__dirname,"public")));
-
-app.get('/',function(req,res){
-    res.render("index")
+app.use(express.urlencoded ({ extended: true}));
+app.use(express.static (path.join(__dirname, "public")));
+app.get('/', function(req, res) {
+fs.readdir(`./files`, function(err, files) {
+res.render("index", {files: files});
+})
 })
 
-
-app.listen(3000);
+app. listen (3000);
